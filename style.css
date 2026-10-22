@@ -38,8 +38,6 @@ p { margin: 0 0 1em; }
 .skip:focus { left: 8px; }
 :focus-visible { outline: 3px solid var(--rosso); outline-offset: 3px; }
 
-.tbc { background: #FFF1C2; color: #6B4A00; border: 1px dashed #B88A00; border-radius: 4px; padding: 0 .35em; font: 600 .72em/1.6 var(--sans); letter-spacing: .03em; white-space: nowrap; vertical-align: .1em; }
-.tbc--dark { background: rgb(255 241 194 / .14); color: #FFE7A3; border-color: #E0B94A; }
 
 /* bottoni: rettangolari, niente pillole */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-height: 54px; padding: .85em 1.4em; border: 2px solid var(--rosso-2); border-radius: 4px; background: var(--rosso-2); color: #fff; font: 700 1rem/1.2 var(--sans); text-decoration: none; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s, transform .15s; }
@@ -73,24 +71,26 @@ p { margin: 0 0 1em; }
 @keyframes bump { 50% { transform: scale(1.35); } }
 
 /* menu a tutto schermo */
-.drawer { width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0; border: 0; background: var(--granato); color: #fff; }
+.drawer { position: fixed; inset: 0; width: 100vw; max-width: none; height: 100vh; height: 100dvh; max-height: none; margin: 0; padding: 0; border: 0; overflow-y: auto; overscroll-behavior: contain; background: var(--granato); color: #fff; }
 .drawer::backdrop { background: rgb(23 24 26 / .5); }
 .drawer[open] { animation: drawer-in .28s cubic-bezier(.2,.8,.2,1); }
 @keyframes drawer-in { from { opacity: 0; transform: translateX(-24px); } }
-.drawer__in { min-height: 100%; display: flex; flex-direction: column; padding: 16px 20px calc(24px + env(safe-area-inset-bottom)); }
+.drawer__in { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; padding: 16px 20px calc(24px + env(safe-area-inset-bottom)); }
 .drawer__head { display: flex; align-items: center; justify-content: space-between; }
 .drawer__head img { background: #fff; border-radius: 50%; padding: 4px; }
 .drawer__x { display: grid; place-items: center; width: 52px; height: 52px; border: 2px solid rgb(255 255 255 / .35); border-radius: 50%; background: none; color: #fff; cursor: pointer; }
 .drawer__x:hover { background: rgb(255 255 255 / .12); }
-.drawer__list { list-style: none; margin: 28px 0; padding: 0; flex: 1; }
+.drawer__in > nav { flex: 1; }
+.drawer__list { list-style: none; margin: 28px 0; padding: 0; }
 .drawer__list a { display: flex; align-items: baseline; gap: 14px; padding: 12px 0; border-bottom: 1px solid rgb(255 255 255 / .16); text-decoration: none; font: 800 clamp(1.9rem, 9vw, 2.8rem)/1.1 var(--display); letter-spacing: -.02em; }
 .drawer__list a:hover { color: var(--rosa); }
 .drawer__n { font: 600 .8rem/1 var(--sans); letter-spacing: .1em; color: var(--rosa); min-width: 22px; }
-.drawer__foot { display: grid; gap: 14px; }
-.drawer__foot .btn { width: 100%; }
-.drawer__foot p { margin: 0; color: var(--rosa); font-size: .95rem; text-align: center; }
-.drawer__foot a { color: #fff; font-weight: 700; }
-body:has(.drawer[open]) { overflow: hidden; }
+.drawer__foot { display: grid; gap: 12px; padding-top: 18px; border-top: 1px solid rgb(255 255 255 / .16); font-size: 1rem; }
+.drawer__foot a, .drawer__foot p { display: flex; align-items: center; gap: 10px; margin: 0; color: #fff; }
+.drawer__foot a { font-weight: 700; text-decoration: none; min-height: 44px; }
+.drawer__foot p { color: #F3DCD9; }
+.drawer__foot svg { color: var(--rosa); }
+html.menu-aperto, html.menu-aperto body { overflow: hidden; }
 
 /* hero granato con il tondo */
 .hero { background: var(--granato); color: #fff; overflow: hidden; }
@@ -150,7 +150,6 @@ body:has(.drawer[open]) { overflow: hidden; }
 .pcard__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
 @media (max-width: 599px) { .pcard__img { aspect-ratio: auto; min-height: 100%; } .pcard__img img { position: absolute; inset: 0; } }
 .pcard:hover .pcard__img img { transform: scale(1.04); }
-.pcard__note { position: absolute; left: 6px; bottom: 6px; padding: 2px 6px; background: rgb(255 255 255 / .8); color: var(--ink-2); font-size: .66rem; letter-spacing: .02em; }
 .pcard__b { padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
 .pcard h3 { font-size: 1.1rem; line-height: 1.12; margin: 2px 0 0; }
 .pcard h3 a { text-decoration: none; }
@@ -162,7 +161,6 @@ body:has(.drawer[open]) { overflow: hidden; }
 .pcard .btn { position: relative; z-index: 1; margin-top: auto; }
 .tag { align-self: flex-start; font: 700 .68rem/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; padding: 5px 7px; background: var(--sele); color: var(--sele-2); }
 .tag--new { background: #FBE3E1; color: var(--granato); }
-.tag--tbc { background: #FFF1C2; color: #6B4A00; }
 .assure { list-style: none; padding: 0; margin: 26px 0 6px; display: grid; gap: 10px; }
 .assure li { display: flex; align-items: center; gap: 10px; font-weight: 600; }
 .assure svg { color: var(--rosso-2); }
@@ -247,7 +245,6 @@ body:has(.drawer[open]) { overflow: hidden; }
 .gallery { margin-inline: -16px; }
 .gallery { position: relative; }
 .gallery__main { width: 100%; aspect-ratio: 1; object-fit: cover; background: #EFE9E3; }
-.gallery__note { position: absolute; left: 24px; top: 8px; margin: 0; padding: 2px 8px; background: rgb(255 255 255 / .8); color: var(--ink-2); font-size: .72rem; }
 .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 16px 0; }
 .thumbs button { padding: 0; border: 2px solid transparent; overflow: hidden; background: none; cursor: pointer; aspect-ratio: 1; }
 .thumbs button[aria-pressed="true"] { border-color: var(--rosso-2); }
@@ -357,8 +354,7 @@ body:has(.drawer[open]) { overflow: hidden; }
   .posts--all { grid-template-columns: repeat(3, 1fr); }
   .pcard__b { padding: 18px 20px 20px; }
   .pcard h3 { font-size: 1.35rem; }
-  .gallery__note { left: 8px; }
-  .visit__in { grid-template-columns: 1.3fr 1fr; align-items: center; }
+    .visit__in { grid-template-columns: 1.3fr 1fr; align-items: center; }
   .visit .cta-row { justify-content: flex-end; }
   .contact { grid-template-columns: 1fr 1fr; gap: 48px; }
   .hours { grid-template-columns: 1.2fr 1fr; gap: 56px; }

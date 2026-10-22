@@ -6,9 +6,14 @@
   if (menu && opener) {
     opener.addEventListener('click', function () {
       if (menu.showModal) menu.showModal(); else menu.setAttribute('open', '');
+      document.documentElement.classList.add('menu-aperto');
       opener.setAttribute('aria-expanded', 'true');
     });
-    menu.addEventListener('close', function () { opener.setAttribute('aria-expanded', 'false'); opener.focus(); });
+    menu.addEventListener('close', function () {
+      document.documentElement.classList.remove('menu-aperto');
+      opener.setAttribute('aria-expanded', 'false');
+      opener.focus();
+    });
     menu.addEventListener('click', function (e) {
       if (e.target === menu || e.target.closest('[data-menu-close]')) menu.close ? menu.close() : menu.removeAttribute('open');
     });
@@ -49,6 +54,7 @@
   document.querySelectorAll('[name="formato"]').forEach(function (r) {
     r.addEventListener('change', function () {
       document.querySelectorAll('[data-formato]').forEach(function (el) { el.textContent = r.value; });
+      document.querySelectorAll('[data-prezzo]').forEach(function (el) { el.textContent = r.dataset.price; });
     });
   });
   var main = document.querySelector('[data-main]');
