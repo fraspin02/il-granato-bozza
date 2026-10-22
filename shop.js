@@ -61,6 +61,15 @@
     });
   });
 
+  // Newsletter: solo anteprima, l'iscrizione verrà collegata a un servizio email
+  document.querySelectorAll('[data-news]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      show("Grazie! Anteprima: l'iscrizione non è ancora attiva");
+      f.reset();
+    });
+  });
+
   // Contatti: il modulo prepara il messaggio e apre WhatsApp
   var form = document.querySelector('[data-wa-form]');
   if (form) {
