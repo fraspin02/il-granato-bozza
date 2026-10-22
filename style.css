@@ -117,15 +117,6 @@ body:has(.drawer[open]) { overflow: hidden; }
 .sec__lead { color: var(--ink-2); font-size: 1.08rem; max-width: 38em; margin: 0; }
 .kicker { font: 700 .82rem/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--rosso-2); margin-bottom: 8px; }
 
-/* righe prodotto (01) */
-.rows { list-style: none; margin: 0; padding: 0; display: grid; }
-.row { display: grid; grid-template-columns: 38% 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--linea); align-items: start; }
-.row > img, .ph--row { width: 100%; aspect-ratio: 1; object-fit: cover; }
-.row h3 { margin-bottom: .3em; }
-.row p { color: var(--ink-2); font-size: .97rem; margin-bottom: .6em; }
-.row .row__k { font: 700 .76rem/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--rosso-2); margin-bottom: 6px; }
-.ph { display: grid; place-items: center; align-content: center; gap: 8px; aspect-ratio: 1; background: radial-gradient(circle, rgb(255 255 255 / .15) 0 5px, transparent 6px) 0 0 / 22px 22px, var(--rosso-2); color: #fff; font-size: .82rem; font-weight: 600; }
-
 /* oasi (02) */
 .oasi { display: grid; gap: 26px; }
 .oasi__txt p { color: #2B3A40; }
@@ -152,19 +143,23 @@ body:has(.drawer[open]) { overflow: hidden; }
 .ticks li { display: flex; gap: 10px; align-items: flex-start; }
 .ticks svg { color: #FF8A80; margin-top: 3px; }
 
-/* shop (04) */
-.grid-shop { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-.pcard { background: #fff; border: 1px solid var(--linea); display: flex; flex-direction: column; }
-.pcard__img { display: block; aspect-ratio: 1; overflow: hidden; background: var(--grigio-0); }
-.pcard__img img, .pcard__img .ph { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+/* shop (01): tre prodotti, stesso set fotografico */
+.grid-shop { display: grid; gap: 14px; }
+.pcard { position: relative; background: #fff; border: 1px solid var(--linea); display: grid; grid-template-columns: 42% 1fr; }
+.pcard__img { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: #EFE9E3; }
+.pcard__img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+@media (max-width: 599px) { .pcard__img { aspect-ratio: auto; min-height: 100%; } .pcard__img img { position: absolute; inset: 0; } }
 .pcard:hover .pcard__img img { transform: scale(1.04); }
-.pcard__b { padding: 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
-.pcard h3 { font-size: 1.02rem; line-height: 1.15; margin: 2px 0 0; }
+.pcard__note { position: absolute; left: 6px; bottom: 6px; padding: 2px 6px; background: rgb(255 255 255 / .8); color: var(--ink-2); font-size: .66rem; letter-spacing: .02em; }
+.pcard__b { padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.pcard h3 { font-size: 1.1rem; line-height: 1.12; margin: 2px 0 0; }
 .pcard h3 a { text-decoration: none; }
+.pcard h3 a::after { content: ""; position: absolute; inset: 0; }
 .pcard h3 a:hover { color: var(--rosso-2); }
-.fmt { font-size: .86rem; color: var(--ink-2); margin: 0; }
-.price { font: 700 1.02rem/1.4 var(--sans); color: var(--granato); margin: 2px 0 10px; }
-.pcard .btn { margin-top: auto; }
+.fmt { font-size: .86rem; font-weight: 700; color: var(--ink-2); margin: 0; }
+.pdesc { display: none; font-size: .92rem; color: var(--ink-2); margin: 2px 0 0; }
+.price { font: 700 1.02rem/1.4 var(--sans); color: var(--granato); margin: 4px 0 10px; }
+.pcard .btn { position: relative; z-index: 1; margin-top: auto; }
 .tag { align-self: flex-start; font: 700 .68rem/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; padding: 5px 7px; background: var(--sele); color: var(--sele-2); }
 .tag--new { background: #FBE3E1; color: var(--granato); }
 .tag--tbc { background: #FFF1C2; color: #6B4A00; }
@@ -254,7 +249,9 @@ body:has(.drawer[open]) { overflow: hidden; }
 .pdp { padding: 16px 0 64px; }
 .pdp__top { display: grid; gap: 24px; }
 .gallery { margin-inline: -16px; }
-.gallery__main { width: 100%; aspect-ratio: 800 / 889; object-fit: cover; background: var(--grigio-0); }
+.gallery { position: relative; }
+.gallery__main { width: 100%; aspect-ratio: 1; object-fit: cover; background: #EFE9E3; }
+.gallery__note { position: absolute; left: 24px; top: 8px; margin: 0; padding: 2px 8px; background: rgb(255 255 255 / .8); color: var(--ink-2); font-size: .72rem; }
 .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 8px 16px 0; }
 .thumbs button { padding: 0; border: 2px solid transparent; overflow: hidden; background: none; cursor: pointer; aspect-ratio: 1; }
 .thumbs button[aria-pressed="true"] { border-color: var(--rosso-2); }
@@ -320,11 +317,12 @@ body:has(.drawer[open]) { overflow: hidden; }
 
 @media (min-width: 600px) {
   .grid-shop { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .pcard { grid-template-columns: 1fr; }
+  .pdesc { display: block; }
   .posts { grid-template-columns: repeat(3, 1fr); }
   .posts--all { grid-template-columns: repeat(2, 1fr); }
   .posts--all .post--big { grid-column: 1 / -1; grid-template-columns: 1.3fr 1fr; align-items: center; gap: 28px; }
   .posts--all .post--big h3 { font-size: 2rem; }
-  .row { grid-template-columns: 220px 1fr; gap: 28px; }
   .quote { grid-template-columns: 130px 1fr; }
   .quote img { width: 130px; height: 130px; }
   .newsletter { grid-template-columns: 1fr auto; align-items: center; padding: 32px; }
@@ -348,8 +346,10 @@ body:has(.drawer[open]) { overflow: hidden; }
   .quote { max-width: 860px; margin-top: 56px; }
   .b2b { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; padding: 56px; }
   .b2b .sec__head { margin: 0; grid-template-columns: 60px 1fr; }
-  .grid-shop { gap: 20px; }
-  .pcard__b { padding: 16px; }
+  .grid-shop { gap: 24px; }
+  .pcard__b { padding: 18px 20px 20px; }
+  .pcard h3 { font-size: 1.35rem; }
+  .gallery__note { left: 8px; }
   .visit__in { grid-template-columns: 1.3fr 1fr; align-items: center; }
   .visit .cta-row { justify-content: flex-end; }
   .contact { grid-template-columns: 1fr 1fr; gap: 48px; }
