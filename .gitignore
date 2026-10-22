@@ -3,8 +3,7 @@
 !/.gitignore
 !/.gitattributes
 !/.nojekyll
-!/index.html
-!/prodotto.html
+!/*.html
 !/style.css
 !/shop.js
 !/img/

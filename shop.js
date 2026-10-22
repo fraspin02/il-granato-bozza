@@ -1,5 +1,20 @@
-// Shop solo dimostrativo: aggiorna il contatore del carrello, nessun ordine né pagamento.
+// Menu a tutto schermo, shop dimostrativo (solo contatore, nessun ordine) e modulo contatti che apre WhatsApp.
 (function () {
+  // Menu
+  var menu = document.getElementById('menu');
+  var opener = document.querySelector('[data-menu-open]');
+  if (menu && opener) {
+    opener.addEventListener('click', function () {
+      if (menu.showModal) menu.showModal(); else menu.setAttribute('open', '');
+      opener.setAttribute('aria-expanded', 'true');
+    });
+    menu.addEventListener('close', function () { opener.setAttribute('aria-expanded', 'false'); opener.focus(); });
+    menu.addEventListener('click', function (e) {
+      if (e.target === menu || e.target.closest('[data-menu-close]')) menu.close ? menu.close() : menu.removeAttribute('open');
+    });
+  }
+
+  // Carrello finto
   var count = 0;
   var badge = document.querySelector('[data-cart-count]');
   var cart = badge && badge.closest('.cart');
@@ -16,7 +31,7 @@
 
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('[data-add]');
-    if (!btn) return;
+    if (!btn || !badge) return;
     var qty = document.querySelector('[data-qty]');
     count += qty ? parseInt(qty.value, 10) || 1 : 1;
     badge.textContent = count;
@@ -45,4 +60,15 @@
       document.querySelectorAll('[data-thumb]').forEach(function (x) { x.setAttribute('aria-pressed', x === t); });
     });
   });
+
+  // Contatti: il modulo prepara il messaggio e apre WhatsApp
+  var form = document.querySelector('[data-wa-form]');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var d = new FormData(form);
+      var text = 'Buongiorno, sono ' + d.get('nome') + ' (' + d.get('chi') + '). ' + d.get('messaggio');
+      window.open('https://wa.me/393397919437?text=' + encodeURIComponent(text), '_blank', 'noopener');
+    });
+  }
 })();
